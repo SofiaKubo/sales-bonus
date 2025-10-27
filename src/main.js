@@ -25,6 +25,11 @@ function calculateSimpleRevenue(purchase, _product) {
  */
 function calculateBonusByProfit(index, total, seller) {
   // @TODO: Расчет бонуса от позиции в рейтинге
+  const rank = index + 1;
+  if (rank === 1) return profit * 0.15;
+  if (rank === 2 || rank === 3) return profit * 0.1;
+  if (rank === total) return 0;
+  return profit * 0.05;
 }
 
 /**
@@ -105,5 +110,8 @@ function analyzeSalesData(data, options) {
   // @TODO: Сортировка продавцов по прибыли
   sellerStats.sort((a, b) => b.profit - a.profit);
   // @TODO: Назначение премий на основе ранжирования
+  sellerStats.forEach((seller, index) => {
+    seller.bonus = calculateBonus(index, total, seller);
+  });
   // @TODO: Подготовка итоговой коллекции с нужными полями
 }
