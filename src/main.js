@@ -78,6 +78,7 @@ function analyzeSalesData(data, options) {
     name: `${seller.first_name} ${seller.last_name}`,
     revenue: 0,
     profit: 0,
+    cost: 0,
     sales_count: 0,
     products_sold: {},
   }));
