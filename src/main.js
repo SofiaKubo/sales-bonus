@@ -96,16 +96,15 @@ function analyzeSalesData(data, options) {
   data.purchase_records.forEach((record) => {
     const seller = sellerIndex[record.seller_id];
     seller.sales_count += 1;
-    seller.revenue += record.total_amount - record.total_discount;
+    seller.revenue += record.total_amount;
 
     record.items.forEach((item) => {
       const product = productIndex[item.sku];
+      const cost = product.purchase_price * item.quantity;
+      const revenue = calculateRevenue(item, product);
+      const profit = revenue - cost;
 
-      const itemRevenue = calculateRevenue(item, product);
-      const itemCost = product.purchase_price * item.quantity;
-      seller.cost += itemCost;
-      seller.profit += itemRevenue - itemCost;
-
+      seller.profit += profit;
       if (!seller.products_sold[item.sku]) {
         seller.products_sold[item.sku] = 0;
       }
