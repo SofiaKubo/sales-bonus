@@ -105,6 +105,7 @@ function analyzeSalesData(data, options) {
       const profit = revenue - cost;
 
       seller.profit += profit;
+
       if (!seller.products_sold[item.sku]) {
         seller.products_sold[item.sku] = 0;
       }
