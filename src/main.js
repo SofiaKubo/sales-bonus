@@ -116,12 +116,14 @@ function analyzeSalesData(data, options) {
   // @TODO: Сортировка продавцов по прибыли
   sellerStats.sort((a, b) => b.profit - a.profit);
   // @TODO: Назначение премий на основе ранжирования
+  const total = sellerStats.length;
+
   sellerStats.forEach((seller, index) => {
     seller.bonus = calculateBonus(index, total, seller);
     seller.top_products = Object.entries(seller.products_sold)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 9)
-      .map(([sku, quantity]) => ({ sku, quantity }));
+      .map(([sku, quantity]) => ({ sku, quantity }))
+      .sort((a, b) => b.quantity - a.quantity)
+      .slice(0, 10);
   });
 
   // @TODO: Подготовка итоговой коллекции с нужными полями
